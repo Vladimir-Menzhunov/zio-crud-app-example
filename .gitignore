@@ -1,0 +1,9 @@
+*.class
+*.log
+.DS_STORE
+target/
+project/project/
+project/target/
+logs/
+.bsp/
+postgres-data/
