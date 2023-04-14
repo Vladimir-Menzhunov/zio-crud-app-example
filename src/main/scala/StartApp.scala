@@ -2,9 +2,9 @@ import api.HttpRoutes
 import config.Config
 import flyway.FlywayAdapter
 import repo.CustomerRepositoryImpl
-import zio.http.{ConnectionPoolConfig, Server}
+import zio.http.Server
 import zio.sql.ConnectionPool
-import zio.{Scope, ZIO, ZIOAppArgs, ZIOAppDefault, http}
+import zio.{Scope, ZIO, ZIOAppArgs, ZIOAppDefault}
 
 import scala.language.postfixOps
 
@@ -17,7 +17,7 @@ object StartApp extends ZIOAppDefault {
     } yield server
 
     server.provide(
-      Config.live,
+      Config.dbLive,
       FlywayAdapter.live,
       Server.live,
       Config.serverLive,

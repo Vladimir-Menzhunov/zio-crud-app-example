@@ -1,6 +1,6 @@
 package flyway
 
-import config.Config
+import config.DbConfig
 import org.flywaydb.core.Flyway
 import org.flywaydb.core.api.FlywayException
 import org.flywaydb.core.api.output.MigrateResult
@@ -11,13 +11,12 @@ object FlywayAdapter {
     def migration: IO[FlywayException, MigrateResult]
   }
 
-  val live: ZLayer[Config.Service, Nothing, FlywayAdapter.Service] =
+  val live: ZLayer[DbConfig, Nothing, FlywayAdapter.Service] =
     ZLayer.fromFunction(new FlywayAdapterImpl(_))
 }
 
-class FlywayAdapterImpl(config: Config.Service) extends FlywayAdapter.Service {
+class FlywayAdapterImpl(dbConfig: DbConfig) extends FlywayAdapter.Service {
   val flyway: UIO[Flyway] = {
-    val dbConfig = config.dbConfig
     ZIO
       .succeed(
         Flyway
